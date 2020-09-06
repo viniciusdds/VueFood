@@ -14,7 +14,10 @@
               </router-link>
             </li>
             <li class="nav-item active">
-              <router-link :to="{name: 'login'}" class="nav-link">Entrar</router-link>
+              <router-link :to="{name: 'my.orders'}" v-if="me.name"  class="nav-link">
+                  Olá {{ me.name }} (<span @click.prevent="logout">logout</span>)!
+              </router-link>
+              <router-link v-else :to="{name: 'login'}" class="nav-link">Entrar</router-link>
             </li>
           </ul>
         </div>
@@ -24,13 +27,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
     ...mapState({
-      productsCart: state => state.cart.products
+      productsCart: state => state.cart.products,
+      me: state => state.auth.me
     })
+  },
+
+  methods: {
+    ...mapActions([
+      'logout'
+    ])
   }
 }
 </script>
