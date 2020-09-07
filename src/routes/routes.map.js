@@ -5,6 +5,8 @@ import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
 import MyOrders from '../pages/Auth/MyOrders';
 import DetailOrder from '../pages/DetailOrder';
+import LoadTableCompany from '../pages/LoadTableCompany';
+import PageNotFound from '../pages/PageNotFound';
 
 const routes = [
    {
@@ -12,31 +14,52 @@ const routes = [
        component: () => import('../layouts/DefaultTemplate'),
        children: [
             {
+                path: '/:token_company/:token_table',
+                component: LoadTableCompany,
+                name: 'load.table.company',
+                props: true
+            },
+            {
                 path: '/pedido/:identify',
                 component: DetailOrder,
                 name: 'order.detail',
-                props: true
+                props: true,
+                meta: {
+                    title: 'Detalhes do Pedido'
+                }
             },
             {
                 path: '/meus-pedidos',
                 component: MyOrders,
-                name: 'my.orders'
+                name: 'my.orders',
+                meta: {
+                    title: 'Meus Pedidos'
+                }
             },
             {
                 path: '/carrinho',
                 component: Cart,
-                name: 'cart'
+                name: 'cart',
+                meta: {
+                    title: 'Carrinho de Compras'
+                }
             },
             {
-                path: '/loja/:companyFlag',
+                path: '/:companyFlag',
                 component: Products,
                 name: 'products',
-                props: true
+                props: true,
+                meta: {
+                    title: 'Produtos'
+                }
             },
             {
                 path: '/',
                 component: Home,
-                name: 'home'
+                name: 'home',
+                meta: {
+                    title: 'Home VueFood'
+                }
             },
        ]
    },
@@ -48,14 +71,28 @@ const routes = [
             {
                 path: '/entrar',
                 component: Login,
-                name: 'login'
+                name: 'login',
+                meta: {
+                    title: 'Login - VueFood'
+                }
             },
             {
                 path: '/cadastrar',
                 component: Register,
-                name: 'register'
+                name: 'register',
+                meta: {
+                    title: 'Cadastrar-se VueFood'
+                }
             }
        ]
+   },
+
+   {
+       path: '*',
+       component: PageNotFound,
+       meta: {
+           title: 'Página não encontrada'
+       }
    }
 ]
 

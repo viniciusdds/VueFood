@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                         <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-                            <h6><strong>R$ {{ item.product.price }} <span class="text-muted">x</span></strong></h6>
+                            <h6><strong>R$ {{ item.product.price | formatprice }} <span class="text-muted">x</span></strong></h6>
                         </div>
                         <div class="col-4 col-sm-4 col-md-4">
                             <div class="quantity">
@@ -46,10 +46,7 @@
                 <!-- END PRODUCT -->
         </div>
         <div class="card-footer card-footer-custom">
-            <div class=" text-light" style="margin: 5px">
-                Preço Total: <b>R$ {{ totalCart }}</b>
-            </div>
-            <a href="" class="btn btn-success ">Finalizar</a>
+            <checkout />
         </div>
     </div>
     <!-- cart-->
@@ -57,22 +54,13 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import Checkout from './_partials/Checkout'
 
 export default {
     computed: {
         ...mapState({
             products: state => state.cart.products
         }),
-
-        totalCart(){
-            let total = 0
-            
-            this.products.map((itemCart, index) => {
-                total += itemCart.qty * itemCart.product.price
-            })
-
-            return total.toFixed(2)
-        }
     },
 
     methods: {
@@ -81,6 +69,10 @@ export default {
             incrementQty: 'INCREMENT_QTY_PROD_CART',
             decrementQty: 'DECREMENT_QTY_PROD_CART',
         }),
+    },
+
+    components: {
+        Checkout
     }
 }
 </script>
